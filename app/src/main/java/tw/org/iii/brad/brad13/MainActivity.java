@@ -192,12 +192,12 @@ public class MainActivity extends AppCompatActivity {
         }.start();                   //*8
     }
 
-    public void test6(View view){
+    public void test6(View view){                                   //*20 分享給其他app
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_SUBJECT,"Sharing URL");
         intent.putExtra(Intent.EXTRA_TEXT,"http://www.url.com");
-        startActivity(Intent.createChooser(intent,"Share URL"));
+        startActivity(Intent.createChooser(intent,"Shalala URL"));
     }
 
     private void fetchPDF(){                                                //*8 xml宣告權限並在上方詢問
@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
             fout.flush();
             fout.close();                                                           //*10
 
-            uiHandler.sendEmptyMessage(2);                                   //*11
+            uiHandler.sendEmptyMessage(2);                                   //*13
 
             Log.v("brad","save OK");
         }catch (Exception e){
@@ -267,19 +267,19 @@ public class MainActivity extends AppCompatActivity {
             super.handleMessage(msg);
             if(msg.what == 0) img.setImageBitmap(bmp);               //*7.5
             if(msg.what == 1) progressDialog.dismiss(); //*11 dismiss就看不到了 不用銷毀
-            if(msg.what == 2) showPDF();                //*11
+            if(msg.what == 2) showPDF();                //*13 丟出去寫
         }
     }
 
-    private void showPDF(){
-        File file = new File(downloadDir,"gamer.pdf");
-        Uri pdfuri = FileProvider.getUriForFile(this,
-                getPackageName() + ".name",file);
+    private void showPDF(){                             //*14
+        File file = new File(downloadDir,"gamer.pdf");     //*14.4
+        Uri pdfuri = FileProvider.getUriForFile(this,   //*14.4
+                getPackageName() + ".lali",file);      //*18  *15去manifest->provider *16去res->xml *17manifest->provider->meta-data
 
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(pdfuri,"application/pdf");
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        startActivity(intent);
+        Intent intent = new Intent(Intent.ACTION_VIEW);         //*14.1
+        intent.setDataAndType(pdfuri,"application/pdf");   //*14.3
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);       //*19   整個intent(包含flag)是交給下一個app去處理
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); //*19
+        startActivity(intent);                                  //*14.2
     }
 }

@@ -24,7 +24,7 @@
         </activity>
 
         <provider
-            android:authorities="${applicationId}.name"
+            android:authorities="${applicationId}.lali"
             android:name="androidx.core.content.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
